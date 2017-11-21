@@ -1,0 +1,1 @@
+# THI-Lite-For-Typecho
