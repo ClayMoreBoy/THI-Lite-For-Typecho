@@ -23,6 +23,9 @@ function themeConfig($form)
     $changyanAPPKEY->input->setAttribute('class', 'mini');
     $form->addInput($changyanAPPKEY);
     
+    $SignBlogTitle = new Typecho_Widget_Helper_Form_Element_Text('SignBlogTitle', NULL, NULL, _t('Title 要高亮的部分'));
+    $form->addInput($SignBlogTitle);
+    
     $GoogleAnalytics = new Typecho_Widget_Helper_Form_Element_Text('GoogleAnalytics', NULL, NULL, _t('Google 统计代码'));
     $GoogleAnalytics->input->setAttribute('class', 'mini');
     $form->addInput($GoogleAnalytics);
@@ -30,8 +33,8 @@ function themeConfig($form)
 	$banner = new Typecho_Widget_Helper_Form_Element_Textarea('banner', NULL, NULL, _t('Banner'), _t('输入图片URL，如有多个则一行一个，随机选择展示。'));
     $form->addInput($banner);
     
-    $pjaxCompleteAction = new Typecho_Widget_Helper_Form_Element_Textarea('pjaxCompleteAction', NULL, NULL, _t('PJAX RELOAD'), _t('启用 PJAX 选项后, 你的第三方插件可能会在 PJAX 中失效。你可能需要在这里重新加载。<br>在这里写入你需要进行处理的 JS 代码。并确保正确,否则可能会导致后续 JS 代码无法执行。'));
-    $form->addInput($pjaxCompleteAction);
+    $footerOutPut = new Typecho_Widget_Helper_Form_Element_Textarea('footerOutPut', NULL, NULL, _t('在 Footer 中输出代码'), _t(''));
+    $form->addInput($footerOutPut);
 }
 
 /*

@@ -19,9 +19,15 @@
     <script>
         Page.Init();
     </script>
-    
     <?php echo Welcome::OutPut() ?>
     <?php $this->footer(); ?>
+    <script>
+    <?php
+        if (isset($this->options->footerOutPut)) {
+            echo $this->options->footerOutPut;
+        }
+    ?>
+    </script>
 </body>
 </html>
 <?php endif;?>

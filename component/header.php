@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#00BCD4" />
+    <meta name="theme-color" content="#ffb6c1" />
     <link rel="dns-prefetch" href="//static.misaka.xin">
     <title><?php $this->archiveTitle(array(
             'category'  =>  _t('分类 %s 下的文章'),
@@ -23,6 +23,7 @@
         window['LocalConst'] = {
             SITE_NAME: '<?php $this->options->title(); ?>',
             SITE_URL: '<?php $this->options->siteUrl(); ?>',
+            SIGN_SITE_TITLE: '<?php if (isset($this->options->SignBlogTitle)) echo $this->options->SignBlogTitle ?>',
             ASSETS_URL: '<?php $this->options->themeUrl('assets/'); ?>',
             COMMENT_SYSTEM: 0,
             COMMENT_SYSTEM_DISQUS: 1,
@@ -51,16 +52,9 @@
     </div>
 
     <div class="page-wrap">
-        <header class="siteHeader top noselect" id="site-header" role="banner">
+        <header class="siteHeader top noselect" id="Header" role="banner">
             <div class="grid">
-                <a class="siteName" href="<?php $this->options->siteUrl(); ?>" id="site-header_logo">
-                    <span class="high">J</span>
-                    <span class="high">C</span>
-                    <span class="high">L</span>
-                    <span>の</span>
-                    <span>日</span>
-                    <span>常</span>
-                </a>    
+                <a class="siteName" href="<?php $this->options->siteUrl(); ?>" id="BlogTitle"></a>    
                 <div class="siteNavBotton">
                     <div class="siteMenuBotton">
                         <a class="siteMenuBottonToggle" id="menu">

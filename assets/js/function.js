@@ -79,14 +79,18 @@ window['Page'] = {
         console.log("\n %c THI Lite v1.0.0 %c https://jcl.moe/ \n\n", "color: #fff; background-image: linear-gradient(90deg, #ffb6c1 0%, #f5c8cf 100%); padding:5px 1px;", "background-image: linear-gradient(90deg, #f5c8cf 0%, rgb(255, 255, 255) 100%); padding:5px 0;");
     },
     Init: function () {
+        if (LocalConst.ASSETS_URL.indexOf('?') != -1) {
+            LocalConst.ASSETS_URL = LocalConst.ASSETS_URL.split('?')[0];
+        }
+
         var showH = '1';
 
         this.Action ();
         this.Console();
-        this.GetHitokoto();
+        this.SignBlogTitle();
         if (localStorage.Debug_Mode == false || localStorage.Debug_Mode == undefined) {
             this.SetContextMenu();
-        }
+        }    
 
         // Menu
         $("#menu").on('click', function(){
@@ -125,11 +129,11 @@ window['Page'] = {
             // 判断是否在顶部
             var scroH = $(this).scrollTop();
             if (scroH >= showH) {
-                $("#site-header").removeClass('top');
+                $("#Header").removeClass('top');
                 $("nav.postNav").show();
             } else if (scroH < showH) {
-                if (!$("#site-header").hasClass('top')) {
-                    $("#site-header").addClass('top');
+                if (!$("#Header").hasClass('top')) {
+                    $("#Header").addClass('top');
                     $("nav.postNav").hide();
                 }
             }
@@ -139,7 +143,7 @@ window['Page'] = {
             $(window).scroll(function() {
                 var after = $(window).scrollTop();
                 if (before<after) {
-                    $("#site-header").addClass('siteHeaderHidden');
+                    $("#Header").addClass('siteHeaderHidden');
                     $(".postNav").addClass('postNavFixed');
                     if ($('body').hasClass('navbar-open')) {
                         $('body').removeClass('navbar-open');
@@ -148,7 +152,7 @@ window['Page'] = {
                     before = after;
                 };
                 if (before>after) {
-                    $("#site-header").removeClass('siteHeaderHidden');
+                    $("#Header").removeClass('siteHeaderHidden');
                     $(".postNav").removeClass('postNavFixed');
                     before = after;
                 };
@@ -173,6 +177,9 @@ window['Page'] = {
         // 加载特效
         this.InitCanvas();
         this.Input();
+
+        // 一言
+        this.GetHitokoto();
         
         // Google Analytics
         if (LocalConst.GOOGLEANALYTICS_ID) {
@@ -188,41 +195,32 @@ window['Page'] = {
             
             // 加载评论
             if (LocalConst.COMMENT_SYSTEM_EMBED === LocalConst.COMMENT_SYSTEM) {
-                $.getScript(LocalConst.ASSETS_URL + '/OwO/OwO.min.js', function(){
-                    new OwO({
-                        logo: 'OωO',
-                        container: document.getElementsByClassName('OwO')[0],
-                        target: document.getElementById('textarea'),
-                        api: LocalConst.ASSETS_URL + '/OwO/OwO.json',
-                        position: 'down',
-                        width: '360px'
-                    });
-                });
+                
             } else if (LocalConst.COMMENT_SYSTEM_EMBED === LocalConst.COMMENT_SYSTEM_DISQUS){
                 this.LoadDisqus();
             }
         }
         // 适用于 GHOST 版本
-        /*if ($('div.index').length) {
+        if ($('div.index').length) {
             // IF 无缩略图 THEN ADD
             if ($('div.postImage.noCover').length) {
                 var i, thumbArr = [];
                 const image = [
-                    'https://static.misaka.xin/Background/10.jpg!top',
-                    'https://static.misaka.xin/Background/14.png',
-                    'https://static.misaka.xin/Background/18.jpg',
-                    'https://static.misaka.xin/Background/19.jpg',
-                    'https://static.misaka.xin/Background/25.jpg',
-                    'https://static.misaka.xin/Background/27.png',
-                    'https://static.misaka.xin/Background/30.jpg',
-                    'https://static.misaka.xin/Background/36.jpg',
-                    'https://static.misaka.xin/Background/68.png',
-                    'https://static.misaka.xin/Background/70.jpg'
+                    'https://public.misaka.xin/Background/10.jpg!top',
+                    'https://public.misaka.xin/Background/14.png',
+                    'https://public.misaka.xin/Background/18.jpg',
+                    'https://public.misaka.xin/Background/19.jpg',
+                    'https://public.misaka.xin/Background/25.jpg',
+                    'https://public.misaka.xin/Background/27.png',
+                    'https://public.misaka.xin/Background/30.jpg',
+                    'https://public.misaka.xin/Background/36.jpg',
+                    'https://public.misaka.xin/Background/68.png',
+                    'https://public.misaka.xin/Background/70.jpg'
                 ];
                 $('div.postImage.noCover').each(function(){
                     i = parseInt(Math.random() * image.length);
                     if (image[i].indexOf('!') != -1) {
-                        thumbArr = image[i].split(",");
+                        thumbArr = image[i].split("!");
                         $(this).css('background-image', 'url(' + thumbArr[0] + ')');   
                         $(this).css('background-position', ' + thumbArr[1] + ');  
                     }  else {
@@ -230,13 +228,32 @@ window['Page'] = {
                     }
                 });
             }
-        }*/
+        }
         
         // 隐藏加载动画
         setTimeout("Page.LoadFinish();", 1500);
     },
     LoadFinish: function() {
 		$("#loading-view").addClass('folding');
+    },
+    SignBlogTitle: function() {
+        if(!LocalConst.SIGN_SITE_TITLE) {
+            return ;
+        }
+        var ret = '',
+            text = LocalConst.SITE_NAME.split(''),
+            sighArr = LocalConst.SIGN_SITE_TITLE.split('');
+        $.each(text, function(i, data) {
+            ret += '<span data-value="' + text[i].toLocaleUpperCase() + '">' + text[i].toLocaleUpperCase() + '</span> \n ';
+        });
+        $("#BlogTitle").html(ret);
+        $.each(sighArr, function(i, data) {
+            $("#BlogTitle > span").each(function(){
+                if ($(this).data('value') == data.toLocaleUpperCase()) {
+                    $(this).addClass('high');
+                }
+            });
+        });
     },
     LoadDisqus: function() {
 		if ($("#disqus_thread").length) {
@@ -301,7 +318,7 @@ window['Page'] = {
         var str = $("#postContentTemp").html(),
             reg = '\\[H(.*?) (.*?)\\](.*?)\\[\\/H(.*?)\\](<br>|<br \\/>)*', arr, content;
         if (arr = str.match(new RegExp(reg, 'g'))) {
-            $.each(arr,function(index,value){
+            $.each(arr, function(index, value){
                 result = value.match(new RegExp(reg));
                 content = '<section class="chapterSpecs material detail">';
                 content += '<div class="postContent" id="postContent">';
@@ -539,7 +556,10 @@ window['Page'] = {
     },
     SetContextMenu: function () {
         if (!$('menu').html()) {
-            var ContextMenuData = $.ajax({url: LocalConst.ASSETS_URL + 'js/ContextMenu.json', async: false}).responseJSON;
+            var ContextMenuData = JSON.parse($.ajax({url: LocalConst.ASSETS_URL + 'js/ContextMenu.js', async: false}).responseText);
+            if (!ContextMenuData) {
+                return ;
+            }
             ContextMenuData.forEach(function (data) {
                 $('menu').append('<a href="' + data.URL + '">' + data.Name + '</a>'); 
             });   

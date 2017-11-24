@@ -57,18 +57,18 @@ class Content {
         }
     }
     
-    function getPostImg ($cid) {
-    	$db = Typecho_Db::get ();
-    	$rs = $db->fetchRow($db->select ('table.contents.text')
-    		->from ('table.contents')
-    		->where ('cid=?', $cid));
-    	$content = preg_replace ("/\t|\n|\r/", "", $rs['text']);
-    	if (preg_match ('/\[.*\]:*(.*?(png|jpeg|jpg|gif|bmp)$)/', $content, $result)) {
-    		return $result[1];
-    	} else if (preg_match ('/<img.*src="(.*?)".*?>/', $content, $result)) {
-    		return $result[1];
-    	} else {
-    		return '';
-    	}
+    public static function getPostImg ($cid) {
+        $db = Typecho_Db::get ();
+        $rs = $db->fetchRow($db->select ('table.contents.text')
+            ->from ('table.contents')
+            ->where ('cid=?', $cid));
+        $content = preg_replace ("/\t|\n|\r/", "", $rs['text']);
+        if (preg_match ('/\[.*\]:*(.*?(png|jpeg|jpg|gif|bmp)$)/', $content, $result)) {
+            return $result[1];
+        } else if (preg_match ('/<img.*src="(.*?)".*?>/', $content, $result)) {
+            return $result[1];
+        } else {
+            return '';
+        }
     }
 }

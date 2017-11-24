@@ -1,4 +1,4 @@
 <?php
 class THI_Const {
-    const STATIC_URL = 'https://public.misaka.xin';
+    const STATIC_URL = 'https://static.misaka.xin';
 }
