@@ -995,12 +995,14 @@ body.navbar-open .post nav.postNav.detail {
 .post .btn-factory-link {
     text-decoration: none;
     display: inline-block;
-    padding: 14px 40px;
-    border: 2px solid #fff;
+    padding: 6px 40px;
+    border: 2px solid #ffb6c1;
     font-size: 0.875rem;
-    color: #fff;
+    /* color: #fff; */
     background-color: rgba(255,255,255,0.15);
-    border-radius: 40px
+    border-radius: 40px;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 .post nav.postNav.detail.postNavFixed a.btn-factory-link {
@@ -1010,7 +1012,9 @@ body.navbar-open .post nav.postNav.detail {
 }
 
 .post .btn-factory-link:hover {
-    text-decoration: underline
+    text-decoration: none;
+    color: #fff;
+    background-color: #ffb6c1;
 }
 
 .post nav.postNav.detail a.btn-factory-link {
@@ -1097,6 +1101,20 @@ body.navbar-open .post nav.postNav.detail {
     /* padding-top: 20px; */
 }
 
+.post section.detail.hasImageGrid .postContent {
+    width: unset!important;
+}
+
+.post section.detail.hasImageGrid .specsContent {
+    width: unset!important;
+    clear: both!important;
+    float: none!important;
+}
+
+.post section.detail.hasImageGrid h3 {
+    padding-left: 280px;
+}
+
 .post section.detail.chapterSpecs,.page-booth-prodcts-show section.detail.chapterSpecs {
     background-color: white;
     text-align: left;
@@ -1169,7 +1187,8 @@ body.navbar-open .post nav.postNav.detail {
         margin-top:0;
         margin-bottom: 20px;
         width: 100%;
-        font-size: 1.25rem
+        font-size: 1.25rem;
+        padding-left: unset;
     }
 }
 
