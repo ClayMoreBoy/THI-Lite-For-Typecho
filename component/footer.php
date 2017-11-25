@@ -11,7 +11,7 @@
     <footer class="siteFooter">
         <section class="copyright"><a href="<?php $this->options->siteUrl(); ?>"><?php $this->options->title(); ?></a>  &copy; <?php echo date("Y") ?></section>
         <hitokoto></hitokoto>
-        <section class="theme">Theme THI Lite by <a href="https://jcl.moe" target="_blank">Mint Jin</a> / Proudly published with <a href="http://typecho.org" target="_blank">Typecho</a></section>
+        <section class="theme">Theme THI Lite by <a href="https://jcl.moe" target="_blank">Momiji Jin</a> / Proudly published with <a href="http://typecho.org" target="_blank">Typecho</a></section>
     </footer>
     <menu></menu>
 
